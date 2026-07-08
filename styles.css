@@ -38,12 +38,12 @@ body {
   padding: max(1.25rem, env(safe-area-inset-top)) 1rem
     max(1.25rem, env(safe-area-inset-bottom));
   display: grid;
-  align-content: center;
+  align-content: start;
   gap: 1rem;
 }
 
 .hero {
-  padding: 1.5rem 0.25rem;
+  padding: 1.5rem 0.25rem 0.5rem;
 }
 
 .eyebrow {
@@ -56,10 +56,10 @@ body {
 }
 
 h1 {
-  max-width: 11ch;
+  max-width: 9ch;
   margin: 0;
-  font-size: clamp(3rem, 18vw, 5.8rem);
-  line-height: 0.88;
+  font-size: clamp(2.75rem, 16vw, 5.1rem);
+  line-height: 0.9;
   letter-spacing: 0;
 }
 
@@ -71,7 +71,8 @@ h1 {
   line-height: 1.55;
 }
 
-.status-panel {
+.status-panel,
+.axis-panel {
   padding: 1rem;
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -79,7 +80,7 @@ h1 {
   box-shadow: 0 1rem 3rem rgba(0, 0, 0, 0.22);
 }
 
-.status-panel div {
+.status-line {
   display: flex;
   align-items: center;
   gap: 0.65rem;
@@ -98,4 +99,105 @@ h1 {
   border-radius: 999px;
   background: var(--accent);
   box-shadow: 0 0 0 0.45rem var(--accent-soft);
+}
+
+.controls {
+  display: grid;
+  gap: 0.75rem;
+}
+
+button {
+  min-height: 3.5rem;
+  border: 0;
+  border-radius: 8px;
+  padding: 0.9rem 1rem;
+  color: var(--text);
+  font: inherit;
+  font-weight: 800;
+  letter-spacing: 0;
+  touch-action: manipulation;
+}
+
+button:disabled {
+  cursor: not-allowed;
+  opacity: 0.52;
+}
+
+.primary-button {
+  background: var(--accent);
+  color: #07100b;
+}
+
+.secondary-button {
+  border: 1px solid var(--border);
+  background: #242b34;
+}
+
+.readout-grid {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0.75rem;
+}
+
+.metric-card {
+  min-height: 6.5rem;
+  padding: 0.9rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  display: grid;
+  align-content: space-between;
+  gap: 0.75rem;
+}
+
+.metric-card span {
+  color: var(--muted);
+  font-size: 0.86rem;
+  font-weight: 700;
+}
+
+.metric-card strong {
+  font-size: clamp(1.45rem, 8vw, 2.15rem);
+  line-height: 1;
+  letter-spacing: 0;
+}
+
+.axis-panel h2 {
+  margin: 0 0 0.9rem;
+  font-size: 1rem;
+  letter-spacing: 0;
+}
+
+.axis-list {
+  display: grid;
+  gap: 0.55rem;
+  margin: 0;
+}
+
+.axis-list div {
+  min-height: 2.75rem;
+  padding: 0.65rem 0.75rem;
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.055);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+}
+
+.axis-list dt {
+  color: var(--muted);
+  font-weight: 800;
+}
+
+.axis-list dd {
+  margin: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 800;
+}
+
+@media (min-width: 42rem) {
+  .controls {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
 }

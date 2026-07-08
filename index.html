@@ -12,11 +12,7 @@
     <main class="app-shell">
       <section class="hero" aria-labelledby="app-title">
         <p class="eyebrow">DriveSmooth</p>
-        <h1 id="app-title">Motion sensor check.</h1>
-        <p class="lede">
-          Place the phone screen-up, grant motion access, then confirm the live
-          readings move when the phone moves.
-        </p>
+        <h1 id="app-title">Drive feel recorder.</h1>
       </section>
 
       <section class="status-panel" aria-label="Sensor status">
@@ -33,7 +29,7 @@
         <button id="motion-button" class="primary-button" type="button">
           Enable Motion
         </button>
-        <button id="calibrate-button" class="secondary-button" type="button" disabled>
+        <button id="calibrate-button" class="secondary-button" type="button">
           Calibrate Screen-Up
         </button>
         <button id="record-button" class="record-button" type="button" disabled>
@@ -91,42 +87,6 @@
           <span class="force-cross force-cross-y"></span>
           <span id="force-dot" class="force-dot"></span>
         </div>
-      </section>
-
-      <section class="axis-panel" aria-label="Axis details">
-        <h2>Raw Acceleration</h2>
-        <dl class="axis-list">
-          <div>
-            <dt>X</dt>
-            <dd id="raw-x">0.00 g</dd>
-          </div>
-          <div>
-            <dt>Y</dt>
-            <dd id="raw-y">0.00 g</dd>
-          </div>
-          <div>
-            <dt>Z</dt>
-            <dd id="raw-z">0.00 g</dd>
-          </div>
-        </dl>
-      </section>
-
-      <section class="axis-panel" aria-label="Corrected axis details">
-        <h2>Smoothed After Calibration</h2>
-        <dl class="axis-list">
-          <div>
-            <dt>X</dt>
-            <dd id="corrected-x">0.00 g</dd>
-          </div>
-          <div>
-            <dt>Y</dt>
-            <dd id="corrected-y">0.00 g</dd>
-          </div>
-          <div>
-            <dt>Z</dt>
-            <dd id="corrected-z">0.00 g</dd>
-          </div>
-        </dl>
       </section>
 
       <section id="summary-panel" class="summary-panel" aria-label="Last recording summary" hidden>

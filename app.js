@@ -14,12 +14,6 @@ const elements = {
   sampleCount: document.querySelector("#sample-count"),
   lateral: document.querySelector("#lateral-value"),
   longitudinal: document.querySelector("#longitudinal-value"),
-  rawX: document.querySelector("#raw-x"),
-  rawY: document.querySelector("#raw-y"),
-  rawZ: document.querySelector("#raw-z"),
-  correctedX: document.querySelector("#corrected-x"),
-  correctedY: document.querySelector("#corrected-y"),
-  correctedZ: document.querySelector("#corrected-z"),
   forceDot: document.querySelector("#force-dot"),
   forceStrength: document.querySelector("#force-strength"),
   recordingState: document.querySelector("#recording-state"),
@@ -59,7 +53,7 @@ elements.recordButton.addEventListener("click", toggleRecording);
 async function enableMotion() {
   if (!("DeviceMotionEvent" in window)) {
     setStatus("Motion unavailable", "This browser does not expose DeviceMotionEvent.");
-    return;
+    return false;
   }
 
   try {
@@ -68,7 +62,7 @@ async function enableMotion() {
 
       if (result !== "granted") {
         setStatus("Permission denied", "Motion access was not granted.");
-        return;
+        return false;
       }
     }
 
@@ -81,8 +75,10 @@ async function enableMotion() {
     elements.calibrateButton.disabled = false;
     elements.recordButton.disabled = false;
     setStatus("Motion enabled", "Readings should update when the phone moves.");
+    return true;
   } catch (error) {
     setStatus("Permission failed", error.message || "Motion access could not be started.");
+    return false;
   }
 }
 
@@ -111,7 +107,7 @@ function handleMotion(event) {
   state.sampleCount += 1;
   updateRate(event.timeStamp);
   recordSample(event.timeStamp, raw, corrected);
-  renderReadings(raw, state.smoothed);
+  renderReadings(state.smoothed);
 }
 
 function toggleRecording() {
@@ -189,7 +185,25 @@ function recordSample(timestamp, raw, corrected) {
 }
 
 async function calibrate() {
-  if (!state.latestRaw || state.calibrating) {
+  if (!state.enabled) {
+    const enabled = await enableMotion();
+
+    if (!enabled) {
+      return;
+    }
+  }
+
+  if (state.calibrating) {
+    return;
+  }
+
+  if (!state.latestRaw) {
+    setStatus("Waiting for motion", "Keep the phone still while the first readings arrive.");
+    await waitForFirstSample();
+  }
+
+  if (!state.latestRaw) {
+    setStatus("No readings yet", "Motion is enabled, but acceleration samples have not arrived.");
     return;
   }
 
@@ -227,17 +241,9 @@ function updateRate(timestamp) {
   }
 }
 
-function renderReadings(raw, corrected) {
+function renderReadings(corrected) {
   elements.sampleCount.textContent = String(state.sampleCount);
   elements.sampleRate.textContent = `${state.rateWindow.length} Hz`;
-
-  elements.rawX.textContent = formatG(raw.x);
-  elements.rawY.textContent = formatG(raw.y);
-  elements.rawZ.textContent = formatG(raw.z);
-
-  elements.correctedX.textContent = formatG(corrected.x);
-  elements.correctedY.textContent = formatG(corrected.y);
-  elements.correctedZ.textContent = formatG(corrected.z);
 
   elements.lateral.textContent = formatG(corrected.x);
   elements.longitudinal.textContent = formatG(corrected.y);
@@ -280,6 +286,18 @@ function average(samples) {
     y: total.y / samples.length,
     z: total.z / samples.length
   };
+}
+
+function waitForFirstSample() {
+  return new Promise((resolve) => {
+    const startedAt = performance.now();
+    const timer = window.setInterval(() => {
+      if (state.latestRaw || performance.now() - startedAt > 1500) {
+        window.clearInterval(timer);
+        resolve();
+      }
+    }, 50);
+  });
 }
 
 function summarizeRecording(samples) {

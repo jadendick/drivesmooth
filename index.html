@@ -57,6 +57,22 @@
         </article>
       </section>
 
+      <section class="force-panel" aria-label="Live force direction">
+        <div class="panel-heading">
+          <h2>Force Feel</h2>
+          <span id="force-strength">0.000 g</span>
+        </div>
+        <div class="force-pad" aria-hidden="true">
+          <span class="force-label force-label-top">Forward / braking</span>
+          <span class="force-label force-label-right">Right</span>
+          <span class="force-label force-label-bottom">Back / acceleration</span>
+          <span class="force-label force-label-left">Left</span>
+          <span class="force-cross force-cross-x"></span>
+          <span class="force-cross force-cross-y"></span>
+          <span id="force-dot" class="force-dot"></span>
+        </div>
+      </section>
+
       <section class="axis-panel" aria-label="Axis details">
         <h2>Raw Acceleration</h2>
         <dl class="axis-list">
@@ -76,7 +92,7 @@
       </section>
 
       <section class="axis-panel" aria-label="Corrected axis details">
-        <h2>Corrected After Calibration</h2>
+        <h2>Smoothed After Calibration</h2>
         <dl class="axis-list">
           <div>
             <dt>X</dt>

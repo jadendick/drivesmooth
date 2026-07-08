@@ -1,5 +1,7 @@
 const GRAVITY = 9.80665;
 const CALIBRATION_MS = 3000;
+const DISPLAY_SMOOTHING = 0.16;
+const FORCE_PAD_RANGE_G = 0.55;
 
 const elements = {
   motionButton: document.querySelector("#motion-button"),
@@ -15,7 +17,9 @@ const elements = {
   rawZ: document.querySelector("#raw-z"),
   correctedX: document.querySelector("#corrected-x"),
   correctedY: document.querySelector("#corrected-y"),
-  correctedZ: document.querySelector("#corrected-z")
+  correctedZ: document.querySelector("#corrected-z"),
+  forceDot: document.querySelector("#force-dot"),
+  forceStrength: document.querySelector("#force-strength")
 };
 
 const state = {
@@ -24,6 +28,7 @@ const state = {
   sampleCount: 0,
   rateWindow: [],
   latestRaw: null,
+  smoothed: null,
   baseline: { x: 0, y: 0, z: 0 }
 };
 
@@ -80,9 +85,10 @@ function handleMotion(event) {
   };
 
   state.latestRaw = raw;
+  state.smoothed = smooth(state.smoothed, corrected);
   state.sampleCount += 1;
   updateRate(event.timeStamp);
-  renderReadings(raw, corrected);
+  renderReadings(raw, state.smoothed);
 }
 
 async function calibrate() {
@@ -138,6 +144,18 @@ function renderReadings(raw, corrected) {
 
   elements.lateral.textContent = formatG(corrected.x);
   elements.longitudinal.textContent = formatG(corrected.y);
+
+  renderForceDot(corrected);
+}
+
+function renderForceDot(corrected) {
+  const x = clamp(corrected.x / FORCE_PAD_RANGE_G, -1, 1);
+  const y = clamp(corrected.y / FORCE_PAD_RANGE_G, -1, 1);
+  const magnitude = Math.hypot(corrected.x, corrected.y);
+
+  elements.forceDot.style.left = `${50 + x * 42}%`;
+  elements.forceDot.style.top = `${50 + y * -42}%`;
+  elements.forceStrength.textContent = formatG(magnitude);
 }
 
 function average(samples) {
@@ -163,6 +181,22 @@ function average(samples) {
 
 function toG(value) {
   return Number.isFinite(value) ? value / GRAVITY : 0;
+}
+
+function smooth(previous, next) {
+  if (!previous) {
+    return { ...next };
+  }
+
+  return {
+    x: previous.x + (next.x - previous.x) * DISPLAY_SMOOTHING,
+    y: previous.y + (next.y - previous.y) * DISPLAY_SMOOTHING,
+    z: previous.z + (next.z - previous.z) * DISPLAY_SMOOTHING
+  };
+}
+
+function clamp(value, min, max) {
+  return Math.min(Math.max(value, min), max);
 }
 
 function formatG(value) {

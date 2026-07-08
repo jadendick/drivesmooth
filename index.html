@@ -36,6 +36,9 @@
         <button id="calibrate-button" class="secondary-button" type="button" disabled>
           Calibrate Screen-Up
         </button>
+        <button id="record-button" class="record-button" type="button" disabled>
+          Start Recording
+        </button>
       </section>
 
       <section class="readout-grid" aria-label="Live motion values">
@@ -49,18 +52,35 @@
         </article>
         <article class="metric-card">
           <span>Lateral X</span>
-          <strong id="lateral-value">0.000 g</strong>
+          <strong id="lateral-value">0.00 g</strong>
         </article>
         <article class="metric-card">
           <span>Longitudinal Y</span>
-          <strong id="longitudinal-value">0.000 g</strong>
+          <strong id="longitudinal-value">0.00 g</strong>
         </article>
+      </section>
+
+      <section class="recording-panel" aria-label="Recording status">
+        <div class="panel-heading">
+          <h2>Recording</h2>
+          <span id="recording-state">Idle</span>
+        </div>
+        <div class="recording-grid">
+          <div>
+            <span>Duration</span>
+            <strong id="recording-duration">0:00</strong>
+          </div>
+          <div>
+            <span>Recorded Samples</span>
+            <strong id="recording-samples">0</strong>
+          </div>
+        </div>
       </section>
 
       <section class="force-panel" aria-label="Live force direction">
         <div class="panel-heading">
           <h2>Force Feel</h2>
-          <span id="force-strength">0.000 g</span>
+          <span id="force-strength">0.00 g</span>
         </div>
         <div class="force-pad" aria-hidden="true">
           <span class="force-label force-label-top">Forward / braking</span>
@@ -78,15 +98,15 @@
         <dl class="axis-list">
           <div>
             <dt>X</dt>
-            <dd id="raw-x">0.000 g</dd>
+            <dd id="raw-x">0.00 g</dd>
           </div>
           <div>
             <dt>Y</dt>
-            <dd id="raw-y">0.000 g</dd>
+            <dd id="raw-y">0.00 g</dd>
           </div>
           <div>
             <dt>Z</dt>
-            <dd id="raw-z">0.000 g</dd>
+            <dd id="raw-z">0.00 g</dd>
           </div>
         </dl>
       </section>
@@ -96,15 +116,56 @@
         <dl class="axis-list">
           <div>
             <dt>X</dt>
-            <dd id="corrected-x">0.000 g</dd>
+            <dd id="corrected-x">0.00 g</dd>
           </div>
           <div>
             <dt>Y</dt>
-            <dd id="corrected-y">0.000 g</dd>
+            <dd id="corrected-y">0.00 g</dd>
           </div>
           <div>
             <dt>Z</dt>
-            <dd id="corrected-z">0.000 g</dd>
+            <dd id="corrected-z">0.00 g</dd>
+          </div>
+        </dl>
+      </section>
+
+      <section id="summary-panel" class="summary-panel" aria-label="Last recording summary" hidden>
+        <div class="panel-heading">
+          <h2>Last Recording</h2>
+          <span id="summary-duration">0:00</span>
+        </div>
+        <dl class="summary-grid">
+          <div>
+            <dt>Samples</dt>
+            <dd id="summary-samples">0</dd>
+          </div>
+          <div>
+            <dt>Average Rate</dt>
+            <dd id="summary-rate">0 Hz</dd>
+          </div>
+          <div>
+            <dt>Max Brake</dt>
+            <dd id="summary-brake">0.00 g</dd>
+          </div>
+          <div>
+            <dt>Max Accel</dt>
+            <dd id="summary-accel">0.00 g</dd>
+          </div>
+          <div>
+            <dt>Max Lateral</dt>
+            <dd id="summary-lateral">0.00 g</dd>
+          </div>
+          <div>
+            <dt>Average Jerk</dt>
+            <dd id="summary-avg-jerk">0.00 g/s</dd>
+          </div>
+          <div>
+            <dt>Max Jerk</dt>
+            <dd id="summary-max-jerk">0.00 g/s</dd>
+          </div>
+          <div>
+            <dt>Jerk Spikes</dt>
+            <dd id="summary-jerk-spikes">0</dd>
           </div>
         </dl>
       </section>

@@ -261,11 +261,19 @@ function renderForceDot(corrected) {
   const x = clamp(corrected.x / FORCE_PAD_RANGE_G, -1, 1);
   const y = clamp(corrected.y / FORCE_PAD_RANGE_G, -1, 1);
   const magnitude = Math.hypot(corrected.x, corrected.y);
-  const tx = x * 42;
-  const ty = -y * 42;
+
+  const DISPLAY_G = 1.0;      // edge of the square
+  const DISPLAY_RANGE = 46;   // % from center to edge
+
+  const px = Math.max(-1, Math.min(1, x / DISPLAY_G));
+  const py = Math.max(-1, Math.min(1, y / DISPLAY_G));
+
+  const tx = px * DISPLAY_RANGE;
+  const ty = -py * DISPLAY_RANGE;
 
   elements.forceDot.style.transform =
     `translate(calc(-50% + ${tx}%), calc(-50% + ${ty}%))`;
+
   elements.forceStrength.textContent = formatG(magnitude);
 }
 
@@ -418,11 +426,11 @@ function setStatus(status, message) {
 }
 
 function animationLoop() {
-    if (state.displayReading) {
-        renderReadings(state.displayReading);
-    }
+  if (state.displayReading) {
+    renderReadings(state.displayReading);
+  }
 
-    requestAnimationFrame(animationLoop);
+  requestAnimationFrame(animationLoop);
 }
 
 requestAnimationFrame(animationLoop);

@@ -396,6 +396,10 @@ function clamp(value, min, max) {
 }
 
 function formatG(value) {
+  if (Math.abs(value) < 0.005) {
+    value = 0;
+  }
+  
   return `${value.toFixed(2)} g`;
 }
 

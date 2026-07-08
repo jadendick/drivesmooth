@@ -275,9 +275,7 @@ button:disabled {
   background: var(--accent);
   box-shadow: 0 0 1.8rem rgba(72, 213, 151, 0.52);
   transform: translate(-50%, -50%);
-  transition:
-    left 15ms linear,
-    top 15ms linear;
+    will-change:transform;
 }
 
 .force-label {

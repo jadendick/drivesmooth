@@ -107,7 +107,7 @@ function handleMotion(event) {
   state.sampleCount += 1;
   updateRate(event.timeStamp);
   recordSample(event.timeStamp, raw, corrected);
-  renderReadings(state.smoothed);
+  state.displayReading = state.smoothed;
 }
 
 function toggleRecording() {
@@ -209,7 +209,7 @@ async function calibrate() {
 
   state.calibrating = true;
   elements.calibrateButton.disabled = true;
-  setStatus("Calibrating", "Keep the phone still and screen-up for 3 seconds.");
+  setStatus("Calibrating", "Keep the phone still and screen-up for 2 seconds.");
 
   const samples = [];
   const start = performance.now();
@@ -261,9 +261,11 @@ function renderForceDot(corrected) {
   const x = clamp(corrected.x / FORCE_PAD_RANGE_G, -1, 1);
   const y = clamp(corrected.y / FORCE_PAD_RANGE_G, -1, 1);
   const magnitude = Math.hypot(corrected.x, corrected.y);
+  const tx = x * 42;
+  const ty = -y * 42;
 
-  elements.forceDot.style.left = `${50 + x * 42}%`;
-  elements.forceDot.style.top = `${50 + y * -42}%`;
+  elements.forceDot.style.transform =
+    `translate(calc(-50% + ${tx}%), calc(-50% + ${ty}%))`;
   elements.forceStrength.textContent = formatG(magnitude);
 }
 
@@ -414,3 +416,13 @@ function setStatus(status, message) {
   elements.status.textContent = status;
   elements.message.textContent = message;
 }
+
+function animationLoop() {
+    if (state.displayReading) {
+        renderReadings(state.displayReading);
+    }
+
+    requestAnimationFrame(animationLoop);
+}
+
+requestAnimationFrame(animationLoop);

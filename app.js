@@ -200,7 +200,7 @@ function clamp(value, min, max) {
 }
 
 function formatG(value) {
-  return `${value.toFixed(3)} g`;
+  return `${value.toFixed(2)} g`;
 }
 
 function setStatus(status, message) {

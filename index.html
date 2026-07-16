@@ -87,47 +87,92 @@
           <span id="force-dot" class="force-dot"></span>
         </div>
       </section>
+<section id="summary-panel" class="summary-panel">
 
-      <section id="summary-panel" class="summary-panel" aria-label="Last recording summary" hidden>
-        <div class="panel-heading">
-          <h2>Last Recording</h2>
-          <span id="summary-duration">0:00</span>
+    <div class="panel-heading">
+        <h2>Drive Summary</h2>
+        <span id="summary-overall-score">100</span>
+    </div>
+
+    <div class="summary-category">
+        <h3>Braking</h3>
+
+        <div class="summary-grid">
+            <div>
+                <dt>Events</dt>
+                <dd id="brake-events">0</dd>
+            </div>
+
+            <div>
+                <dt>Max G</dt>
+                <dd id="brake-max-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Avg G</dt>
+                <dd id="brake-avg-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Smoothness</dt>
+                <dd id="brake-score">100</dd>
+            </div>
         </div>
-        <dl class="summary-grid">
-          <div>
-            <dt>Samples</dt>
-            <dd id="summary-samples">0</dd>
-          </div>
-          <div>
-            <dt>Average Rate</dt>
-            <dd id="summary-rate">0 Hz</dd>
-          </div>
-          <div>
-            <dt>Max Brake</dt>
-            <dd id="summary-brake">0.00 g</dd>
-          </div>
-          <div>
-            <dt>Max Accel</dt>
-            <dd id="summary-accel">0.00 g</dd>
-          </div>
-          <div>
-            <dt>Max Lateral</dt>
-            <dd id="summary-lateral">0.00 g</dd>
-          </div>
-          <div>
-            <dt>Average Jerk</dt>
-            <dd id="summary-avg-jerk">0.00 g/s</dd>
-          </div>
-          <div>
-            <dt>Max Jerk</dt>
-            <dd id="summary-max-jerk">0.00 g/s</dd>
-          </div>
-          <div>
-            <dt>Jerk Spikes</dt>
-            <dd id="summary-jerk-spikes">0</dd>
-          </div>
-        </dl>
-      </section>
+    </div>
+
+    <div class="summary-category">
+        <h3>Acceleration</h3>
+
+        <div class="summary-grid">
+            <div>
+                <dt>Events</dt>
+                <dd id="accel-events">0</dd>
+            </div>
+
+            <div>
+                <dt>Max G</dt>
+                <dd id="accel-max-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Avg G</dt>
+                <dd id="accel-avg-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Smoothness</dt>
+                <dd id="accel-score">100</dd>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary-category">
+        <h3>Cornering</h3>
+
+        <div class="summary-grid">
+            <div>
+                <dt>Events</dt>
+                <dd id="corner-events">0</dd>
+            </div>
+
+            <div>
+                <dt>Max G</dt>
+                <dd id="corner-max-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Avg G</dt>
+                <dd id="corner-avg-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Smoothness</dt>
+                <dd id="corner-score">100</dd>
+            </div>
+        </div>
+    </div>
+
+</section>
     </main>
   </body>
 </html>

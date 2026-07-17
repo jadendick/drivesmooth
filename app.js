@@ -131,7 +131,7 @@ function handleMotion(event) {
   state.smoothed = smooth(state.smoothed, corrected);
   state.sampleCount += 1;
   updateRate(event.timeStamp);
-  recordSample(event.timeStamp, raw, corrected);
+  recordSample(event.timeStamp, raw, state.smoothed);
   state.displayReading = state.smoothed;
 }
 
@@ -272,6 +272,7 @@ function stopRecording() {
   setStatus("Recording stopped", "Summary calculated from this in-memory recording.");
 }
 
+// corrected is currently the smoothed values
 function recordSample(timestamp, raw, corrected) {
   if (!state.recording) {
     return;
@@ -587,7 +588,7 @@ function setStatus(status, message) {
 
 // ---------- Driving Event Detection ----------
 
-const EVENT_THRESHOLD = 0.05;     // g
+const EVENT_THRESHOLD = 0.1;     // g
 const EVENT_RELEASE = 0.02;       // hysteresis
 const JERK_SPIKE = 0.5;           // g/s
 
@@ -656,7 +657,9 @@ function endEvent(type) {
   e.averageG = e.sumG / Math.max(1, e.samples);
   e.rmsJerk = Math.sqrt(e.jerkSquared / Math.max(1, e.samples));
 
-  drivingEvents[type].push(e);
+  if (e.duration > 200) {
+    drivingEvents[type].push(e);
+  }
 
   activeEvents[type] = null;
 }

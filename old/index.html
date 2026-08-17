@@ -1,0 +1,178 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#111418">
+    <title>DriveSmooth</title>
+    <link rel="stylesheet" href="./styles.css">
+    <script type="module" src="./app.js"></script>
+  </head>
+  <body>
+    <main class="app-shell">
+      <section class="hero" aria-labelledby="app-title">
+        <p class="eyebrow">DriveSmooth</p>
+      </section>
+
+      <section class="status-panel" aria-label="Sensor status">
+        <div class="status-line">
+          <span class="status-dot" aria-hidden="true"></span>
+          <span id="sensor-status">Waiting for permission</span>
+        </div>
+        <p id="sensor-message">
+          iPhone Safari requires a tap before motion data can be read.
+        </p>
+      </section>
+
+      <section class="controls" aria-label="Sensor controls">
+        <button id="motion-button" class="primary-button" type="button">
+          Enable Motion
+        </button>
+        <button id="calibrate-button" class="secondary-button" type="button">
+          Calibrate Screen-Up
+        </button>
+        <button id="record-button" class="record-button" type="button" disabled>
+          Start Recording
+        </button>
+      </section>
+
+      <section class="readout-grid" aria-label="Live motion values">
+        <article class="metric-card">
+          <span>Sample Rate</span>
+          <strong id="sample-rate">0 Hz</strong>
+        </article>
+        <article class="metric-card">
+          <span>Samples</span>
+          <strong id="sample-count">0</strong>
+        </article>
+        <article class="metric-card">
+          <span>Lateral X</span>
+          <strong id="lateral-value">0.00 g</strong>
+        </article>
+        <article class="metric-card">
+          <span>Longitudinal Y</span>
+          <strong id="longitudinal-value">0.00 g</strong>
+        </article>
+      </section>
+
+      <section class="recording-panel" aria-label="Recording status">
+        <div class="panel-heading">
+          <h2>Recording</h2>
+          <span id="recording-state">Idle</span>
+        </div>
+        <div class="recording-grid">
+          <div>
+            <span>Duration</span>
+            <strong id="recording-duration">0:00</strong>
+          </div>
+          <div>
+            <span>Recorded Samples</span>
+            <strong id="recording-samples">0</strong>
+          </div>
+        </div>
+      </section>
+
+      <section class="force-panel" aria-label="Live force direction">
+        <div class="panel-heading">
+          <h2>Force Feel</h2>
+          <span id="force-strength">0.00 g</span>
+        </div>
+        <div class="force-pad" aria-hidden="true">
+          <span class="force-label force-label-top">Forward / braking</span>
+          <span class="force-label force-label-right">Right</span>
+          <span class="force-label force-label-bottom">Back / acceleration</span>
+          <span class="force-label force-label-left">Left</span>
+          <span class="force-cross force-cross-x"></span>
+          <span class="force-cross force-cross-y"></span>
+          <span id="force-dot" class="force-dot"></span>
+        </div>
+      </section>
+<section id="summary-panel" class="summary-panel">
+
+    <div class="panel-heading">
+        <h2>Drive Summary</h2>
+        <span id="summary-overall-score">100</span>
+    </div>
+
+    <div class="summary-category">
+        <h3>Braking</h3>
+
+        <div class="summary-grid">
+            <div>
+                <dt>Events</dt>
+                <dd id="brake-events">0</dd>
+            </div>
+
+            <div>
+                <dt>Max G</dt>
+                <dd id="brake-max-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Avg G</dt>
+                <dd id="brake-avg-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Smoothness</dt>
+                <dd id="brake-score">100</dd>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary-category">
+        <h3>Acceleration</h3>
+
+        <div class="summary-grid">
+            <div>
+                <dt>Events</dt>
+                <dd id="accel-events">0</dd>
+            </div>
+
+            <div>
+                <dt>Max G</dt>
+                <dd id="accel-max-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Avg G</dt>
+                <dd id="accel-avg-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Smoothness</dt>
+                <dd id="accel-score">100</dd>
+            </div>
+        </div>
+    </div>
+
+    <div class="summary-category">
+        <h3>Cornering</h3>
+
+        <div class="summary-grid">
+            <div>
+                <dt>Events</dt>
+                <dd id="corner-events">0</dd>
+            </div>
+
+            <div>
+                <dt>Max G</dt>
+                <dd id="corner-max-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Avg G</dt>
+                <dd id="corner-avg-g">0.00 g</dd>
+            </div>
+
+            <div>
+                <dt>Smoothness</dt>
+                <dd id="corner-score">100</dd>
+            </div>
+        </div>
+    </div>
+
+</section>
+    </main>
+  </body>
+</html>

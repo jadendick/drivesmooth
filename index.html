@@ -15,29 +15,14 @@
         <span class="brand">DriveSmooth</span>
         <p id="status-message" role="status">Ready to calibrate</p>
         <span id="input-mode" class="mode-badge">Motion</span>
+        <a class="settings-link" href="./settings.html" aria-label="Open settings" title="Settings">
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 15.25A3.25 3.25 0 1 0 12 8.75a3.25 3.25 0 0 0 0 6.5Z"/><path d="M19.4 13.75a7.9 7.9 0 0 0 .05-1.75 7.9 7.9 0 0 0-.05-1.75l2.06-1.6-2-3.46-2.43.98a8.7 8.7 0 0 0-3.03-1.75L13.63 2h-4l-.37 2.42A8.7 8.7 0 0 0 6.23 6.17L3.8 5.2l-2 3.46 2.06 1.6A7.9 7.9 0 0 0 3.8 12c0 .6.02 1.18.06 1.75l-2.06 1.6 2 3.46 2.43-.98a8.7 8.7 0 0 0 3.03 1.75L9.63 22h4l.37-2.42a8.7 8.7 0 0 0 3.03-1.75l2.43.98 2-3.46-2.06-1.6Z"/></svg>
+        </a>
       </header>
 
       <section class="controls" aria-label="Drive controls">
         <button id="calibrate-button" class="secondary-button" type="button">Calibrate</button>
         <button id="record-button" class="primary-button" type="button">Start drive</button>
-      </section>
-
-      <section class="overview" aria-label="Live forces">
-        <article class="reading-card">
-          <span>Lateral X</span>
-          <strong id="x-reading">0.00 g</strong>
-          <small>raw <span id="x-raw-reading">0.00 g</span></small>
-        </article>
-        <article class="reading-card">
-          <span>Longitudinal Y</span>
-          <strong id="y-reading">0.00 g</strong>
-          <small>raw <span id="y-raw-reading">0.00 g</span></small>
-        </article>
-        <article class="reading-card">
-          <span>Sample rate</span>
-          <strong id="sample-rate">0 Hz</strong>
-          <small id="recording-time">Not recording</small>
-        </article>
       </section>
 
       <section class="charts-section" aria-label="Force charts">
@@ -49,11 +34,11 @@
           <button id="live-view-button" class="text-button" type="button" hidden>Live view</button>
         </div>
         <article class="chart-card">
-          <div class="chart-label"><span>X lateral</span><span>-1g to +1g</span></div>
+          <div class="chart-label"><span>X lateral</span><span id="x-chart-range">-1g to +1g</span></div>
           <canvas id="x-chart" aria-label="X lateral force chart"></canvas>
         </article>
         <article class="chart-card">
-          <div class="chart-label"><span>Y longitudinal</span><span>-1g to +1g</span></div>
+          <div class="chart-label"><span>Y longitudinal</span><span id="y-chart-range">-1g to +1g</span></div>
           <canvas id="y-chart" aria-label="Y longitudinal force chart"></canvas>
         </article>
       </section>

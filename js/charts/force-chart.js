@@ -1,6 +1,6 @@
 export class ForceChart {
   constructor(canvas, axis, color, config) { this.canvas = canvas; this.axis = axis; this.color = color; this.config = config; this.context = canvas.getContext("2d"); }
-  draw(samples, { durationMs, now }) {
+  draw(samples, { durationMs, now, rangeG }) {
     const rect = this.canvas.getBoundingClientRect();
     const ratio = window.devicePixelRatio || 1;
     const width = Math.max(1, Math.round(rect.width * ratio)); const height = Math.max(1, Math.round(rect.height * ratio));
@@ -13,8 +13,8 @@ export class ForceChart {
     let hasPoint = false;
     for (const sample of samples) {
       const x = ((sample.timestamp - start) / (end - start)) * rect.width;
-      const value = Math.max(-this.config.maxDisplayForceG, Math.min(this.config.maxDisplayForceG, sample.smooth[this.axis]));
-      const y = rect.height / 2 - (value / this.config.maxDisplayForceG) * (rect.height / 2 - 10);
+      const value = Math.max(-rangeG, Math.min(rangeG, sample.smooth[this.axis]));
+      const y = rect.height / 2 - (value / rangeG) * (rect.height / 2 - 10);
       if (!hasPoint) { ctx.moveTo(x, y); hasPoint = true; } else ctx.lineTo(x, y);
     }
     ctx.stroke();

@@ -1,6 +1,8 @@
 import { CONFIG } from "./config.js";
 import { Calibration } from "./processing/calibration.js";
 import { smoothForce } from "./processing/force-smoother.js";
+import { orientForce } from "./processing/orientation.js";
+import { loadSettings } from "./settings.js";
 import { DeviceMotionInput } from "./input/device-motion.js";
 import { LocalhostSimulator } from "./input/localhost-simulator.js";
 import { AppState } from "./state/app-state.js";
@@ -8,6 +10,7 @@ import { ForceChart } from "./charts/force-chart.js";
 import { Dashboard } from "./ui/dashboard.js";
 
 const useSimulator = ["localhost", "127.0.0.1", "[::1]"].includes(location.hostname);
+const settings = loadSettings();
 const calibration = new Calibration();
 const state = new AppState(CONFIG);
 let input; let dashboard; let calibrationTimer = null; let chartDirty = true;
@@ -16,13 +19,14 @@ const xChart = new ForceChart(document.querySelector("#x-chart"), "x", "#85b8ff"
 const yChart = new ForceChart(document.querySelector("#y-chart"), "y", "#48d597", CONFIG);
 
 function handleInput(reading) {
-  if (calibration.active) calibration.add(reading);
-  const raw = calibration.apply(reading); const smooth = smoothForce(raw);
+  const vehicleForce = orientForce(reading, settings.phoneForward);
+  if (calibration.active) calibration.add(vehicleForce);
+  const raw = calibration.apply(vehicleForce); const smooth = smoothForce(raw);
   state.addSample({ timestamp: reading.timestamp, raw, smooth }); chartDirty = true;
 }
 
-input = useSimulator ? new LocalhostSimulator(handleInput) : new DeviceMotionInput(handleInput);
-dashboard = new Dashboard({ state, onCalibrate: calibrate, onToggleRecording: toggleRecording, onShowLive: () => { state.showLive(); chartDirty = true; }, onSelectEvent: (id) => { state.selectEvent(id); chartDirty = true; } });
+input = useSimulator ? new LocalhostSimulator(handleInput, () => settings) : new DeviceMotionInput(handleInput);
+dashboard = new Dashboard({ state, settings, onCalibrate: calibrate, onToggleRecording: toggleRecording, onShowLive: () => { state.showLive(); chartDirty = true; }, onSelectEvent: (id) => { state.selectEvent(id); chartDirty = true; } });
 dashboard.setMode(useSimulator);
 
 async function ensureInput() { await input.requestPermission(); input.start(); }
@@ -56,7 +60,8 @@ function render(now) {
     const samples = selected?.samples || state.liveSamples;
     const end = selected?.endedAt || now;
     const durationMs = selected?.durationMs || CONFIG.liveHistoryMs;
-    xChart.draw(samples, { durationMs, now: end }); yChart.draw(samples, { durationMs, now: end }); chartDirty = false;
+    xChart.draw(samples, { durationMs, now: end, rangeG: settings.xRangeG });
+    yChart.draw(samples, { durationMs, now: end, rangeG: settings.yRangeG }); chartDirty = false;
   }
   requestAnimationFrame(render);
 }

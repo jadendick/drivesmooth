@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+    <meta name="theme-color" content="#101317">
+    <title>Settings · DriveSmooth</title>
+    <link rel="stylesheet" href="./css/theme.css">
+    <link rel="stylesheet" href="./css/app.css">
+    <script type="module" src="./js/settings-page.js"></script>
+  </head>
+  <body>
+    <main class="app-shell settings-page">
+      <header class="topbar">
+        <a class="back-link" href="./index.html" aria-label="Back to DriveSmooth">←</a>
+        <span class="brand">DriveSmooth</span>
+        <p>Settings</p>
+      </header>
+
+      <form id="settings-form" class="settings-form">
+        <section class="settings-card" aria-labelledby="chart-settings-title">
+          <p class="eyebrow">Display</p>
+          <h1 id="chart-settings-title">Chart range</h1>
+          <p class="settings-help">Choose the maximum force shown above and below zero on each chart.</p>
+          <label>X lateral range (g)<input id="x-range" name="xRangeG" type="number" min="0.25" max="3" step="0.25" required></label>
+          <label>Y longitudinal range (g)<input id="y-range" name="yRangeG" type="number" min="0.25" max="3" step="0.25" required></label>
+        </section>
+
+        <section class="settings-card" aria-labelledby="orientation-settings-title">
+          <p class="eyebrow">Sensor mapping</p>
+          <h2 id="orientation-settings-title">Phone direction</h2>
+          <p class="settings-help">Select the edge of the phone that points toward the front of the vehicle. The default, bottom edge forward, corrects reversed left/right and acceleration/braking readings.</p>
+          <label>Phone edge facing forward
+            <select id="phone-forward" name="phoneForward">
+              <option value="bottom">Bottom edge</option>
+              <option value="top">Top edge</option>
+              <option value="right">Right edge</option>
+              <option value="left">Left edge</option>
+            </select>
+          </label>
+        </section>
+
+        <button class="primary-button" type="submit">Save settings</button>
+      </form>
+    </main>
+  </body>
+</html>

@@ -1,6 +1,6 @@
 import { CONFIG } from "./config.js";
 import { Calibration } from "./processing/calibration.js";
-import { smoothForce } from "./processing/force-smoother.js";
+import { resetForceSmoother, smoothForce } from "./processing/force-smoother.js";
 import { orientForce } from "./processing/orientation.js";
 import { loadSettings } from "./settings.js";
 import { DeviceMotionInput } from "./input/device-motion.js";
@@ -21,7 +21,7 @@ const yChart = new ForceChart(document.querySelector("#y-chart"), "y", "#48d597"
 function handleInput(reading) {
   const vehicleForce = orientForce(reading, settings.phoneForward);
   if (calibration.active) calibration.add(vehicleForce);
-  const raw = calibration.apply(vehicleForce); const smooth = smoothForce(raw);
+  const raw = calibration.apply(vehicleForce); const smooth = smoothForce(raw, reading.timestamp, settings.smoothingTauMs);
   state.addSample({ timestamp: reading.timestamp, raw, smooth }); chartDirty = true;
 }
 
@@ -34,7 +34,7 @@ async function ensureInput() { await input.requestPermission(); input.start(); }
 async function calibrate() {
   try {
     dashboard.setCalibrating(true); dashboard.setStatus("Hold still — zeroing forces");
-    await ensureInput(); calibration.begin(CONFIG.calibrationMs, performance.now());
+    await ensureInput(); resetForceSmoother(); calibration.begin(CONFIG.calibrationMs, performance.now());
     window.clearTimeout(calibrationTimer);
     calibrationTimer = window.setTimeout(() => {
       const success = calibration.finish(); dashboard.setCalibrating(false);
@@ -49,7 +49,7 @@ async function toggleRecording() {
     state.stop(performance.now()); input.stop(); dashboard.setStatus("Drive stopped — events saved in memory"); chartDirty = true; return;
   }
   try {
-    await ensureInput(); state.start(performance.now()); dashboard.setStatus("Recording drive events"); chartDirty = true;
+    await ensureInput(); resetForceSmoother(); state.start(performance.now()); dashboard.setStatus("Recording drive events"); chartDirty = true;
   } catch (error) { dashboard.setStatus(error.message || "Could not start motion data"); }
 }
 

@@ -39,6 +39,15 @@
           </label>
         </section>
 
+        <section class="settings-card" aria-labelledby="smoothing-settings-title">
+          <p class="eyebrow">Signal processing</p>
+          <h2 id="smoothing-settings-title">Road-noise smoothing</h2>
+          <p class="settings-help">Higher values make the force line steadier but respond more slowly. 250 ms is a balanced starting point.</p>
+          <label for="smoothing-tau">Smoothing time constant: <output id="smoothing-tau-value" for="smoothing-tau"></output>
+            <input id="smoothing-tau" name="smoothingTauMs" type="range" min="25" max="1000" step="25">
+          </label>
+        </section>
+
         <button class="primary-button" type="submit">Save settings</button>
       </form>
     </main>

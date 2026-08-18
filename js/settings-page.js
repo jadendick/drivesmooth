@@ -5,6 +5,12 @@ const form = document.querySelector("#settings-form");
 form.elements.xRangeG.value = settings.xRangeG;
 form.elements.yRangeG.value = settings.yRangeG;
 form.elements.phoneForward.value = settings.phoneForward;
+form.elements.smoothingTauMs.value = settings.smoothingTauMs;
+
+const smoothingTauValue = document.querySelector("#smoothing-tau-value");
+function renderSmoothingTau() { smoothingTauValue.value = `${form.elements.smoothingTauMs.value} ms`; }
+renderSmoothingTau();
+form.elements.smoothingTauMs.addEventListener("input", renderSmoothingTau);
 
 form.addEventListener("submit", (event) => {
   event.preventDefault();
@@ -12,6 +18,7 @@ form.addEventListener("submit", (event) => {
     xRangeG: form.elements.xRangeG.value,
     yRangeG: form.elements.yRangeG.value,
     phoneForward: form.elements.phoneForward.value,
+    smoothingTauMs: form.elements.smoothingTauMs.value,
   });
   location.assign("./index.html");
 });

@@ -22,15 +22,14 @@
           <p class="eyebrow">Display</p>
           <h1 id="chart-settings-title">Chart range</h1>
           <p class="settings-help">Choose the maximum force shown above and below zero on each chart.</p>
-          <label>X lateral range (g)<input id="x-range" name="xRangeG" type="number" min="0.25" max="3" step="0.25" required></label>
-          <label>Y longitudinal range (g)<input id="y-range" name="yRangeG" type="number" min="0.25" max="3" step="0.25" required></label>
+          <label>X lateral range (g)<input id="x-range" name="xRangeG" type="number" min="0.1" max="3" step="0.1" required></label>
+          <label>Y longitudinal range (g)<input id="y-range" name="yRangeG" type="number" min="0.1" max="3" step="0.1" required></label>
         </section>
 
         <section class="settings-card" aria-labelledby="orientation-settings-title">
           <p class="eyebrow">Sensor mapping</p>
           <h2 id="orientation-settings-title">Phone direction</h2>
-          <p class="settings-help">Select the edge of the phone that points toward the front of the vehicle. The default, bottom edge forward, corrects reversed left/right and acceleration/braking readings.</p>
-          <label>Phone edge facing forward
+          <p class="settings-help">Select the edge of the phone that points toward the front of the vehicle.
             <select id="phone-forward" name="phoneForward">
               <option value="bottom">Bottom edge</option>
               <option value="top">Top edge</option>

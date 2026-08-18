@@ -1,5 +1,5 @@
 const STORAGE_KEY = "drivesmooth.settings.v1";
-const DEFAULT_SETTINGS = Object.freeze({ xRangeG: 1, yRangeG: 1, phoneForward: "bottom" });
+const DEFAULT_SETTINGS = Object.freeze({ xRangeG: 1, yRangeG: 1, phoneForward: "top" });
 const VALID_DIRECTIONS = new Set(["top", "bottom", "left", "right"]);
 
 function validRange(value, fallback) {
